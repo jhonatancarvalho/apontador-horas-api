@@ -8,10 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import br.com.jhonatan.apontadorhorasapi.services.validation.UserInsertOrUpdate;
 
 @Entity
+@UserInsertOrUpdate
 @Table(name="`User`")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -20,15 +23,19 @@ public class User implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String name;
 	
 	@Column(unique=true)
+	@NotEmpty(message="Preenchimento obrigatório")
+	@Email(message="Email inválido")
 	private String email;
 	
 	@Column(unique=true)
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String login;
 	
-	@JsonIgnore
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String password;
 	
 	public User() {

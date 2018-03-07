@@ -1,4 +1,4 @@
-package br.com.jhonatan.apontadorhorasapi.resources.exception.validation.error;
+package br.com.jhonatan.apontadorhorasapi.services.validation.error;
 
 import java.io.Serializable;
 
