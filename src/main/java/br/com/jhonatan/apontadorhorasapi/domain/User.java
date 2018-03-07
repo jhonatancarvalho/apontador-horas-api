@@ -1,16 +1,21 @@
 package br.com.jhonatan.apontadorhorasapi.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.jhonatan.apontadorhorasapi.services.validation.UserInsertOrUpdate;
 
@@ -25,20 +30,24 @@ public class User implements Serializable {
 	@GenericGenerator(name = "increment", strategy = "increment")
 	private Integer id;
 	
-	@NotEmpty(message="Preenchimento obrigatório")
+	@NotEmpty(message="Required field")
 	private String name;
 	
 	@Column(unique=true)
-	@NotEmpty(message="Preenchimento obrigatório")
-	@Email(message="Email inválido")
+	@NotEmpty(message="Required field")
+	@Email(message="Invalid email")
 	private String email;
 	
 	@Column(unique=true)
-	@NotEmpty(message="Preenchimento obrigatório")
+	@NotEmpty(message="Required field")
 	private String login;
 	
-	@NotEmpty(message="Preenchimento obrigatório")
+	@NotEmpty(message="Required field")
 	private String password;
+
+	@JsonIgnore
+	@ManyToMany(mappedBy="users")
+	private List<Project> projects = new ArrayList<>();
 	
 	public User() {
 		super();
@@ -90,6 +99,14 @@ public class User implements Serializable {
 	
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public List<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
 	}
 
 	@Override

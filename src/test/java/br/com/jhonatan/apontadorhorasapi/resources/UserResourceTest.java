@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -37,6 +38,8 @@ import br.com.jhonatan.apontadorhorasapi.security.JWTUtil;
 @TestPropertySource(
   locations = "classpath:application-test.properties")
 public class UserResourceTest {
+	
+	private static final String BASE_ENDPOINT_USER = "/user";
 
 	@Autowired
     private MockMvc mvc;
@@ -53,10 +56,10 @@ public class UserResourceTest {
     @Test
     public void shouldFindUser() throws Exception {
          
-        final User user = UserBuilder.builder().comEmail("a@b.com.br").comLogin("ab").build();
+        final User user = UserBuilder.builder().withEmail("a@b.com.br").withLogin("ab").build();
         userRepository.save(user);
      
-        mvc.perform(get("/user/" + user.getId())    
+        mvc.perform(get(BASE_ENDPOINT_USER + "/" + user.getId())    
           .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtUtil.generateToken(user.getLogin()))
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())
@@ -69,10 +72,10 @@ public class UserResourceTest {
     @Test
     public void notShouldFindUserWithIdNull() throws Exception {
 
-    	final User user = UserBuilder.builder().comEmail("g@h.com.br").comLogin("gh").build();
+    	final User user = UserBuilder.builder().withEmail("g@h.com.br").withLogin("gh").build();
     	userRepository.save(user);
     	
-        mvc.perform(get("/user/" + null)
+        mvc.perform(get(BASE_ENDPOINT_USER + "/" + null)
           .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtUtil.generateToken(user.getLogin()))
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isBadRequest());
@@ -81,21 +84,31 @@ public class UserResourceTest {
     @Test
     public void notShouldFindUserWithIdNonExist() throws Exception {
 
-    	final User user = UserBuilder.builder().comEmail("i@j.com.br").comLogin("ij").build();
+    	final User user = UserBuilder.builder().withEmail("i@j.com.br").withLogin("ij").build();
     	userRepository.save(user);
     	
-        mvc.perform(get("/user/" + -1)
+        mvc.perform(get(BASE_ENDPOINT_USER + "/" + -1)
           .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtUtil.generateToken(user.getLogin()))
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isNotFound());
     }
     
+    @Test(expected = UsernameNotFoundException.class)
+    public void notShouldFindUserWithUserLoginInvalid() throws Exception {
+
+    	final User user = UserBuilder.builder().withEmail("notFound@user.com").withLogin("notFound").build();
+    	
+        mvc.perform(get(BASE_ENDPOINT_USER + "/" + 1)
+          .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtUtil.generateToken(user.getLogin()))
+          .contentType(MediaType.APPLICATION_JSON));
+    }
+    
     @Test
     public void shouldSaveUser() throws Exception {
          
-        final User user = UserBuilder.builder().comEmail("c@d.com.br").comLogin("cd").build();
+        final User user = UserBuilder.builder().withEmail("c@d.com.br").withLogin("cd").build();
         
-        mvc.perform(MockMvcRequestBuilders.post("/user")
+        mvc.perform(MockMvcRequestBuilders.post(BASE_ENDPOINT_USER)
           .content(objectMapper.writeValueAsString(user))
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isCreated());
@@ -104,11 +117,12 @@ public class UserResourceTest {
     @Test
     public void shouldUpdateUser() throws Exception {
          
-        final User user = UserBuilder.builder().comEmail("e@f.com.br").comLogin("ef").build();
+        final User user = UserBuilder.builder().withEmail("e@f.com.br").withLogin("ef").build();
         userRepository.save(user);
+        user.setPassword("456");
         user.setName("Roberta");
         
-        mvc.perform(MockMvcRequestBuilders.put("/user/" + user.getId())
+        mvc.perform(MockMvcRequestBuilders.put(BASE_ENDPOINT_USER + "/" + user.getId())
           .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtUtil.generateToken(user.getLogin()))
           .content(objectMapper.writeValueAsString(user))
           .contentType(MediaType.APPLICATION_JSON))

@@ -14,12 +14,12 @@ public class UserBuilder {
 		return userBuilder;
 	}
 	
-	public UserBuilder comEmail(String email) {
+	public UserBuilder withEmail(String email) {
 		user.setEmail(email);
 		return this;
 	}
 	
-	public UserBuilder comLogin(String login) {
+	public UserBuilder withLogin(String login) {
 		user.setLogin(login);
 		return this;
 	}
