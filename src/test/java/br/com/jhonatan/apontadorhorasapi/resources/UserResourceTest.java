@@ -39,7 +39,7 @@ import br.com.jhonatan.apontadorhorasapi.security.JWTUtil;
   locations = "classpath:application-test.properties")
 public class UserResourceTest {
 	
-	private static final String BASE_ENDPOINT_USER = "/user";
+	private static final String BASE_ENDPOINT_USER = "/users";
 
 	@Autowired
     private MockMvc mvc;

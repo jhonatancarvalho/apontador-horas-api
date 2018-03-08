@@ -19,7 +19,7 @@ import br.com.jhonatan.apontadorhorasapi.domain.User;
 import br.com.jhonatan.apontadorhorasapi.services.UserService;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserResource {
 	
 	@Autowired

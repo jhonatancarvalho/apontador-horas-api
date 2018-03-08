@@ -22,7 +22,7 @@ import br.com.jhonatan.apontadorhorasapi.dto.TimeDTO;
 import br.com.jhonatan.apontadorhorasapi.services.TimeService;
 
 @RestController
-@RequestMapping("/time")
+@RequestMapping("/times")
 public class TimeResource {
 
 	@Autowired

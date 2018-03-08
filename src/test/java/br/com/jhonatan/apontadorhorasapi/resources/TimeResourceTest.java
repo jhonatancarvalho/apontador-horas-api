@@ -50,7 +50,7 @@ import br.com.jhonatan.apontadorhorasapi.services.TimeService;
   locations = "classpath:application-test.properties")
 public class TimeResourceTest {
 
-	private static final String BASE_ENDPOINT_TIME = "/time";
+	private static final String BASE_ENDPOINT_TIME = "/times";
 	
 	@Autowired
     private MockMvc mvc;

@@ -46,7 +46,7 @@ import br.com.jhonatan.apontadorhorasapi.services.ProjectService;
   locations = "classpath:application-test.properties")
 public class ProjectResourceTest {
 
-	private static final String BASE_ENDPOINT_PROJECT = "/project";
+	private static final String BASE_ENDPOINT_PROJECT = "/projects";
 	
 	@Autowired
     private MockMvc mvc;

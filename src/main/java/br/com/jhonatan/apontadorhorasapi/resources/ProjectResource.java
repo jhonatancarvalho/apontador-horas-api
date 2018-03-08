@@ -21,7 +21,7 @@ import br.com.jhonatan.apontadorhorasapi.dto.ProjectDTO;
 import br.com.jhonatan.apontadorhorasapi.services.ProjectService;
 
 @RestController
-@RequestMapping("/project")
+@RequestMapping("/projects")
 public class ProjectResource {
 
 	@Autowired
