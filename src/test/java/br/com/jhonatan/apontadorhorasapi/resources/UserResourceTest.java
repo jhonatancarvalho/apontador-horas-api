@@ -3,6 +3,8 @@ package br.com.jhonatan.apontadorhorasapi.resources;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -19,7 +21,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -108,7 +109,7 @@ public class UserResourceTest {
          
         final User user = UserBuilder.builder().withEmail("c@d.com.br").withLogin("cd").build();
         
-        mvc.perform(MockMvcRequestBuilders.post(BASE_ENDPOINT_USER)
+        mvc.perform(post(BASE_ENDPOINT_USER)
           .content(objectMapper.writeValueAsString(user))
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isCreated());
@@ -122,7 +123,7 @@ public class UserResourceTest {
         user.setPassword("456");
         user.setName("Roberta");
         
-        mvc.perform(MockMvcRequestBuilders.put(BASE_ENDPOINT_USER + "/" + user.getId())
+        mvc.perform(put(BASE_ENDPOINT_USER + "/" + user.getId())
           .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtUtil.generateToken(user.getLogin()))
           .content(objectMapper.writeValueAsString(user))
           .contentType(MediaType.APPLICATION_JSON))

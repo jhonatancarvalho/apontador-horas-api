@@ -4,6 +4,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -21,7 +23,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -94,7 +95,7 @@ public class ProjectResourceTest {
         
         final ProjectDTO projectDTO = ProjectDTOBuilder.builder().withUsers(Arrays.asList(user1, user2)).build();
         
-        mvc.perform(MockMvcRequestBuilders.post(BASE_ENDPOINT_PROJECT)
+        mvc.perform(post(BASE_ENDPOINT_PROJECT)
           .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtUtil.generateToken(user1.getLogin()))
           .content(objectMapper.writeValueAsString(projectDTO))
           .contentType(MediaType.APPLICATION_JSON))
@@ -111,7 +112,7 @@ public class ProjectResourceTest {
         final Project project = projectRepository.save(projectService.fromDTO(projectDTO));
         projectDTO.setTitle("novoTitle");
 
-        mvc.perform(MockMvcRequestBuilders.put(BASE_ENDPOINT_PROJECT + "/" + project.getId())
+        mvc.perform(put(BASE_ENDPOINT_PROJECT + "/" + project.getId())
           .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtUtil.generateToken(user.getLogin()))
           .content(objectMapper.writeValueAsString(projectDTO))
           .contentType(MediaType.APPLICATION_JSON))
@@ -132,7 +133,7 @@ public class ProjectResourceTest {
         projectRepository.saveAll(Arrays.asList(projectService.fromDTO(projectDTO1), projectService.fromDTO(projectDTO2)));
         final Integer sizeProjects = (int) projectRepository.count();
 
-        mvc.perform(MockMvcRequestBuilders.get(BASE_ENDPOINT_PROJECT)
+        mvc.perform(get(BASE_ENDPOINT_PROJECT)
           .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtUtil.generateToken(user.getLogin()))
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())

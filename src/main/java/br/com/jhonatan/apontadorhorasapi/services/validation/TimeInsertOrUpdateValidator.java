@@ -20,9 +20,6 @@ public class TimeInsertOrUpdateValidator implements ConstraintValidator<TimeInse
 	private HttpServletRequest request;
 
 	@Override
-	public void initialize(TimeInsertOrUpdate ann) {}
-
-	@Override
 	public boolean isValid(TimeDTO timeDTO, ConstraintValidatorContext context) {
 		if (Objects.isNull(request)) {
 			return true;

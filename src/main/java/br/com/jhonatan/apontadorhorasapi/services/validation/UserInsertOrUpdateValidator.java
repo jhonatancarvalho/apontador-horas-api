@@ -25,9 +25,6 @@ public class UserInsertOrUpdateValidator implements ConstraintValidator<UserInse
 	private UserRepository userRepository;
 
 	@Override
-	public void initialize(UserInsertOrUpdate ann) {}
-
-	@Override
 	public boolean isValid(User user, ConstraintValidatorContext context) {
 		if (Objects.isNull(request)) {
 			return true;

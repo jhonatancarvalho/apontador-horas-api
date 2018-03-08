@@ -7,10 +7,6 @@ public class AuthenticateDTO implements Serializable {
 	
 	private String login;
 	private String password;
-	
-	public AuthenticateDTO() {
-		super();
-	}
 
 	public String getLogin() {
 		return login;

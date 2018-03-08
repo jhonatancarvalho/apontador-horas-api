@@ -3,6 +3,8 @@ package br.com.jhonatan.apontadorhorasapi.resources;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDateTime;
@@ -20,7 +22,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -105,7 +106,7 @@ public class TimeResourceTest {
         
         final TimeDTO timeDTO = TimeDTOBuilder.builder().withProjectId(project.getId()).build();
         
-        mvc.perform(MockMvcRequestBuilders.post(BASE_ENDPOINT_TIME)
+        mvc.perform(post(BASE_ENDPOINT_TIME)
           .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtUtil.generateToken(user.getLogin()))
           .content(objectMapper.writeValueAsString(timeDTO))
           .contentType(MediaType.APPLICATION_JSON))
@@ -127,7 +128,7 @@ public class TimeResourceTest {
 		timeDTO.setEndedAt(null);
 		timeDTO.setStartedAt(LocalDateTime.now().minusMinutes(5L));
         
-        mvc.perform(MockMvcRequestBuilders.post(BASE_ENDPOINT_TIME)
+        mvc.perform(post(BASE_ENDPOINT_TIME)
           .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtUtil.generateToken(user.getLogin()))
           .content(objectMapper.writeValueAsString(timeDTO))
           .contentType(MediaType.APPLICATION_JSON))
@@ -150,7 +151,7 @@ public class TimeResourceTest {
         final Time time = timeRepository.save(timeService.fromDTO(timeDTO));
         timeDTO.setProjectId(project2.getId());
 
-        mvc.perform(MockMvcRequestBuilders.put(BASE_ENDPOINT_TIME + "/" + time.getId())
+        mvc.perform(put(BASE_ENDPOINT_TIME + "/" + time.getId())
           .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtUtil.generateToken(user.getLogin()))
           .content(objectMapper.writeValueAsString(timeDTO))
           .contentType(MediaType.APPLICATION_JSON))
