@@ -3,7 +3,6 @@ package br.com.jhonatan.apontadorhorasapi.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -13,7 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -28,10 +26,8 @@ public class Project implements Serializable {
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
 	private Integer id;
-	
-	@NotEmpty(message="Required field")
+
 	private String title;
-	
 	private String description;
 
 	@ManyToMany
@@ -80,16 +76,8 @@ public class Project implements Serializable {
 		this.description = description;
 	}
 
-	public List<Integer> getUsers() {
-		if (Objects.isNull(users)) {
-			return null;
-		}
-		
-		final List<Integer> usersId = new ArrayList<>();
-		for (User user : users) {
-			usersId.add(user.getId());
-		}
-		return usersId;
+	public List<User> getUsers() {
+		return users;
 	}
 
 	public void setUsers(List<User> users) {

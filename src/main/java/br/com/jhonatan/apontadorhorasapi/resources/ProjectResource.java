@@ -28,8 +28,8 @@ public class ProjectResource {
 	private ProjectService projectService;
 	
 	@GetMapping("{id}")
-	public ResponseEntity<Project> findById(@PathVariable Integer id) {
-		return ResponseEntity.ok(projectService.findById(id));
+	public ResponseEntity<ProjectDTO> findById(@PathVariable Integer id) {
+		return ResponseEntity.ok(new ProjectDTO(projectService.findById(id)));
 	}
 	
 	@PostMapping

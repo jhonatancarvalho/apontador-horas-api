@@ -13,7 +13,7 @@ public class ProjectDTOBuilder {
 	
 	public static ProjectDTOBuilder builder() {
 		final ProjectDTOBuilder projectDTOBuilder = new ProjectDTOBuilder();
-		projectDTOBuilder.projectDTO = new ProjectDTO("Project One", "First project of world.");
+		projectDTOBuilder.projectDTO = new ProjectDTO(null, "Project One", "Prototype for world domination.");
 		return projectDTOBuilder;
 	}
 	

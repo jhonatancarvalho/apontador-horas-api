@@ -82,7 +82,7 @@ public class ProjectResourceTest {
           .andExpect(jsonPath("$.id", is(project.getId())))
           .andExpect(jsonPath("$.title", is(project.getTitle())))
           .andExpect(jsonPath("$.description", is(project.getDescription())))
-          .andExpect(jsonPath("$.user_id", is(project.getUsers())));
+          .andExpect(jsonPath("$.user_id", is(projectDTO.getUsersId())));
     }
     
     @Test

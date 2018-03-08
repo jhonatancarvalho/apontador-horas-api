@@ -8,8 +8,12 @@ import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import br.com.jhonatan.apontadorhorasapi.domain.Project;
+
 public class ProjectDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+	private Integer id;
 	
 	@NotEmpty(message="Required field")
 	private String title;
@@ -24,9 +28,27 @@ public class ProjectDTO implements Serializable {
 		super();
 	}
 
-	public ProjectDTO(String title, String description) {
+	public ProjectDTO(Integer id, String title, String description) {
+		this.id = id;
 		this.title = title;
 		this.description = description;
+	}
+	
+	public ProjectDTO(Project project) {
+		this.id = project.getId();
+		this.title = project.getTitle();
+		this.description = project.getDescription();
+		project.getUsers().forEach(user -> {
+			this.usersId.add(user.getId());
+		});
+	}
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getTitle() {
