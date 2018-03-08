@@ -1,5 +1,5 @@
 # API | Apontador de Horas
-Disponível em: http://apontador-horas-api.herokuapp.com/api/v1/
+Disponível em: https://apontador-horas-api.herokuapp.com/api/v1/
 
 ### Tempo estimado / gasto
 | Atividade | Estimativa | Gasto |
