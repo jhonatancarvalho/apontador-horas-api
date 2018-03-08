@@ -15,6 +15,7 @@ public class TestConfig {
 	public ObjectMapper objectMapper() {
 		final ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		objectMapper.findAndRegisterModules();
 		return objectMapper;
 	}
 	

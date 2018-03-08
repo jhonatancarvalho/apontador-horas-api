@@ -7,25 +7,25 @@ import br.com.jhonatan.apontadorhorasapi.dto.ProjectDTO;
 
 public class ProjectDTOBuilder {
 
-	private ProjectDTO project;
+	private ProjectDTO projectDTO;
 	
 	private ProjectDTOBuilder() {}
 	
 	public static ProjectDTOBuilder builder() {
 		final ProjectDTOBuilder projectDTOBuilder = new ProjectDTOBuilder();
-		projectDTOBuilder.project = new ProjectDTO("Project One", "First project of world.");
+		projectDTOBuilder.projectDTO = new ProjectDTO("Project One", "First project of world.");
 		return projectDTOBuilder;
 	}
 	
 	public ProjectDTOBuilder withUsers(List<User> users) {
 		for (User user : users) {
-			project.getUsersId().add(user.getId());
+			projectDTO.getUsersId().add(user.getId());
 		}
 		return this;
 	}
 
 	public ProjectDTO build() {
-		return project;
+		return projectDTO;
 	}
 	
 }

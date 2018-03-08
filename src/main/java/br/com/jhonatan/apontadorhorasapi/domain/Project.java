@@ -5,16 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -38,6 +41,10 @@ public class Project implements Serializable {
 	)
 	@JsonProperty("user_id")
 	private List<User> users = new ArrayList<>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="project", cascade=CascadeType.ALL)
+	private List<Time> times = new ArrayList<>();
 
 	public Project() {
 		super();
@@ -89,6 +96,14 @@ public class Project implements Serializable {
 		this.users = users;
 	}
 
+	public List<Time> getTimes() {
+		return times;
+	}
+
+	public void setTimes(List<Time> times) {
+		this.times = times;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -114,19 +129,4 @@ public class Project implements Serializable {
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("Project [id=");
-		builder.append(id);
-		builder.append(", title=");
-		builder.append(title);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", users=");
-		builder.append(users);
-		builder.append("]");
-		return builder.toString();
-	}
-	
 }

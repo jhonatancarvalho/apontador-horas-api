@@ -40,10 +40,10 @@ public class ProjectService {
 		return projectRepository.findAll();
 	}
 
-	public Project fromDTO(ProjectDTO newProjectDTO) {
-		final Project project = new Project(null, newProjectDTO.getTitle(), newProjectDTO.getDescription());
+	public Project fromDTO(ProjectDTO projectDTO) {
+		final Project project = new Project(null, projectDTO.getTitle(), projectDTO.getDescription());
 		final List<User> users = new ArrayList<>();
-		for (Integer userId : newProjectDTO.getUsersId()) {
+		for (Integer userId : projectDTO.getUsersId()) {
 			users.add(userService.findById(userId));
 		}
 		project.setUsers(users);
