@@ -8,7 +8,7 @@ Disponível em: https://apontador-horas-api.herokuapp.com/api/v1/
 | Autenticação | 3 h | 2h 56m |
 | Cadastro de Projetos | 3 h | 2h 39m |
 | Cadastro de Tempo | 3 h | 3h 35m |
-##### Relatório da ferramenta de controle de horas (Toggle)
+##### Relatório da ferramenta de controle de horas (Toggl)
 ![alt text](https://s3-sa-east-1.amazonaws.com/jhonatan-carvalho/tempoGasto.png)
 
 ### Tecnologias utilizadas
